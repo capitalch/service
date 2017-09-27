@@ -1,0 +1,46 @@
+//yamaha
+set temporary option conversion_error = 'off';
+declare local temporary table "local"(
+name char(40),part_code char(8), price char(7), remarks char(12), spec char(2));
+//input into local from 'c:\windows\desktop\ttt.txt'
+##########
+format ascii
+delimited by '\x09'
+(part_code,name,spec,price,remarks);
+declare @part_code char(8),@inv_part_code char(8)
+  declare @tcode char(8)
+  declare @name char(40),@inv_name char(40)
+  declare @spec char(2),@inv_spec char(2)
+  declare @price char(7)
+  declare @pprice numeric(7,2),@inv_price numeric(7,2)
+  declare @row integer
+  declare updt 
+  dynamic scroll cursor for select part_code,name,spec,price from local
+  open updt
+  while 1 = 1 -- loop thru all rows of new imported table
+    begin
+      fetch next updt into @part_code,@name,@spec,
+        -- no further rows
+        @price
+      if @@sqlstatus <> 0 break
+      select @inv_part_code = part_code,@inv_name = name,
+        @inv_spec = spec,@inv_price = price from inv_master where
+        part_code = @part_code
+      select @row=@@rowcount
+      select @pprice=convert(numeric(7,2),@price) -- conversion from char to numeric
+      if @pprice is null
+        select @pprice=0
+      if @row = 0
+        insert into inv_master(AVAILABLE,EQU,MODEL,name,part_code,
+          prev_equ,price,rank,spec) values(' ',0,' ',@name,@part_code,
+          0,@pprice,' ',' ')
+      else
+        begin
+          -- if price difference then update price
+          if @inv_price <> @pprice and @pprice <> 0
+            update inv_master set price = @pprice where part_code = @part_code
+          if trim(@inv_name) = '' or @inv_name is null
+            update inv_master set name = @name
+        end
+    end
+  close updt -- closes the cursor

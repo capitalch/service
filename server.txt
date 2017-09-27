@@ -1,0 +1,7 @@
+-n server -x tcpip -gp 4096
+c:\progra~1\capital\service+\database\service.db
+
+
+
+
+

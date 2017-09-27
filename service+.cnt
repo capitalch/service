@@ -1,0 +1,222 @@
+:Base service+.hlp>main
+:Title Overview of service+
+1 System Configuration Required
+2 System Hardware and software=hpad10@service+.hlp
+2 Data grid concept=hpad120@service+.hlp
+1 Getting started
+2 Before Starting with service+=hpad130@service+.hlp
+2 Environment Setup =hpad20@service+.hlp
+2 Service+ Databases=hpad350@service+.hlp>main
+1 Service+ Installation and setup
+2 Installation=hpad850
+2 Starting Service+=hpad130
+2 Initial Setup for Service+=hpad590
+1 Overview of service+
+2 Selecting a software for service Industry=hpad780
+2 Introduction to service+=hpad30@service+.hlp
+2 General Features=hpad160
+2 Technical Features=hpad190
+2 Target Users=hpad40@service+.hlp
+2 Goals=hpad50@service+.hlp
+2 advantages=hpad70@service+.hlp
+2 Increase profits=hpad90@service+.hlp
+2 Future versions=hpad100@service+.hlp
+2 Success Story=hpad110@service+.hlp
+1 Service+ Arcitecture
+2 Inventory Management
+3 Opening Stock of Spare Parts=hpad970
+3 Purchase of Spare Parts=hpad220
+3 Sale of Spare Parts=hpad230
+3 Consumption of Spare Parts in Workshop=hpad210
+3 Direct Adjustment of Spare Parts in Stock=hpad240
+3 Spare Parts Given on Loan=hpad1220
+2 Order Management
+3 Orders to Suppliers
+4 New / Current Order=hpad380
+4 Group A Spare Parts Order=hpad400
+4 Cancellation of  Order of Spare Parts=hpad430
+3 Bookings by Customers
+4 New Bookings by Customers / Distributors=hpad450
+4 Cancellation of Bookings by Customers=hpad470
+4 Bookings against jobs in workshop=hpad460
+2 Service Center Management
+3 Opening stock of Jobs in hand=hpad660
+3 Job Receiving=hpad650
+3 Job Transactions=hpad750
+3 Job Final=hpad930
+3 Money Receipt=hpad910
+2 Reports Generation
+3 Inventory Related Reports
+4 Spare Parts Stock in Hand=hpad1290
+4 Master Spare Part Report=hpad1300
+4 Spare Parts Ageing=hpad1230
+4 Spare Parts Transaction Report=hpad1310
+4 Spare Part Consumption Pattern=hpad1330
+4 Loan Spare Part Report=hpad1340
+3 Order and booking Related Reports
+4 Old Orders to Suppliers=hpad1230
+4 Back Orders To Suppliers=hpad1240
+4 Bookings From Customers=hpad480
+4 Status of Customer Bookings=hpad1260
+3 Service Related Reports
+4 Service Center Performance in Details=hpad1480
+4 Service Center Performance in Summery=hpad1490
+4 Monthly Service Report=hpad1500
+4 Master BCD report=hpad1530
+4 Jobs in Hand Status Report=hpad1510
+4 Customer Enquiry Log=hpad1520
+4 Job Alert=hpad890
+3 Accounts Related reports
+4 Cash Register=hpad1540
+4 Sale Report=hpad1550
+2 Queries
+3 Job Query=hpad700
+3 Part Finder=hpad290
+2 Maintainance
+3 New Spare Parts Database Create=hpad1560
+3 Backup=hpad1580
+3 Update Masters=hpad1590
+2 Custom Menu
+3 Band Selection for Casio Watches=hpad1620
+3 Model Wise Parts Selection for Casio Watch=hpad1630
+1 How To
+2 Use the Help=hpad280@service+.hlp
+2 Inventory  related
+3 Out / Credit a spare part when used in workshop=hpad210
+3 Add an invoice of spare parts from the company=hpad220
+3 Add a sales bill of dealer / customer for spare parts=hpad230
+3 do adjustments in quantity of a spare part=hpad240
+3 Record the initial stock of spare parts when service+ is started=hpad250
+3 Do the alteration in master spare parts table=hpad260
+3 Record the spare parts model wise=hpad270
+3 Search for a spare part in stock or in database=hpad290
+3 Setup currency parameters and cost price=hpad300
+3 Search for a service manual=hpad330
+3 Define equivalent parts=hpad340
+2 Orders related
+3 Create a new order=hpad380
+3 Execute an order=hpad420
+3 Create an order to company in 2 Minutes=hpad400@service+.hlp
+3 Email an order=hpad370
+3 Book an order from customer=hpad450
+3 Cancel order for spare parts=hpad430
+3 Record the booking of spare part for job in workshop=hpad460
+3 See the present status of booking=hpad480
+2 Job Service related
+3 Receive a job and print a job slip for customer=hpad650
+3 Do the transactions on jobs=hpad750
+3 set opening stock  in workshop, starting service+ for first time=hpad660
+3 Query a job=hpad700
+3 Get total number of ready,not ready jobs=hpad750
+2 Setup related
+3 Define local / home currency/ vendor currency / international currency=hpad300
+3 Setup the passwords=hpad140
+3 Setup for databases=hpad640
+2 Reports related
+3 Get reports on total parts transactions=hpad760
+3 Get performance of service center=hpad1490
+1 Service+ Menu Items Roadmap
+2 file
+3 Select Company=hpad1060
+3 Login As Different User=hpad530
+3 Reconnect Database=hpad1090
+3 Job Alert=hpad890
+3 New
+4 New Product Company=hpad1070
+4 Item=hpad1080
+2 Reception
+3 Job Receiving=hpad650
+3 Job Transactions=hpad750
+3 Opening Jobs Entry=hpad660
+3 Money Receipts=hpad910
+3 Discrete Expences=hpad920
+3 Final of ready Jobs=hpad930
+2 Spare Parts
+3 Masters Setup
+4 Default Auto Setup of Masters=hpad940
+4 Setup for Spare Parts Database=hpad950
+4 Spare Parts Master=hpad960
+4 Opening Inventory on Spare Parts=hpad970
+4 Financial Year Setup=hpad980
+4 General / Tax Setup=hpad990
+4 Shipping Codes=hpad1000
+4 Category Setup=hpad1010
+4 Customer Groups and pricing=hpad1020
+4 Customer Master=hpad1030
+4 Supplier Master=hpad1040
+4 Model Spare Part Mapping=hpad270
+4 Pricecode Master=hpad1110
+4 Equivalent Spare Part Registration=hpad340
+4 Group A Spare Part Registration=hpad400
+3 Purchase Invoice=hpad220
+3 Sales Bills
+4 General Billing=hpad230
+4 Spot Billing=hpad230
+3 Orders to suppliers
+4 New Order=hpad380
+4 New Order Based on Group A Parts=hpad400
+4 Cancellation of ordered spare parts=hpad430
+3 Booking from customers
+4 New Booking from customer=hpad450
+4 Cancellation of Booking=hpad470
+3 Bookings against Job
+4 New Booking Against Job=hpad460
+3 Service Manuals=hpad330
+3 Consumption of Spare Parts
+4 Used in workshop=hpad210
+4 Direct Adjustment of spare parts=hpad240
+4 Loan / Loan Refund of Spare Part=hpad1220
+3 Reports
+4 Old Orders to Suppliers=hpad1230
+4 Order Status / Back Order=hpad1240
+4 Order Status / Back Order for all Suppliers=hpad1250
+4 Bookings from customers=hpad480
+4 Booking Status Customer Wise=hpad1260
+4 Booking Status All Customers=hpad1270
+4 Booking Status All Jobs=hpad1280
+4 Stock Report=hpad1290
+4 Master Spare Part Report=hpad1300
+4 Spare Parts Transaction report=hpad1310
+4 Spare Parts Ageing Report=hpad1230
+4 Spare Parts Consumption Report=hpad1330
+4 Loan Spare Parts report=hpad1340
+3 Utilities
+4 Part Finder=hpad290
+4 Recalculate=hpad1350
+2 Setup
+3 Setup for Newly Created Database=hpad950
+3 Job Slip Setup=hpad1360
+3 Money receipt Setup=hpad1370
+3 Print Setup=hpad1380
+3 Technician Setup=hpad670
+3 Currency Table Setup=hpad300
+3 Home Company Setup=hpad1390
+3 Product Setup=hpad1400
+3 Job Receiving Type Setup=hpad1410
+3 Status Master Setup=hpad1420
+3 Storage Place Setup=hpad1430
+3 Defect Master Setup=hpad1440
+3 Item defect Setup=hpad1450
+3 User Management=hpad1460
+3 Customer Setup=hpad1470
+2 Reports
+3 Detailed Performance Report=hpad1480
+3 Summery Performance Report=hpad1490
+3 Service Report=hpad1500
+3 Job Status report=hpad1510
+3 Customer Enquiry Log=hpad1520
+3 Master BCD Report=hpad1530
+3 Cash register=hpad1540
+3 Master Sale report=hpad1550
+2 Maintainance
+3 New Spare Parts Company Database Create=hpad1560
+3 Register a database=hpad1570
+3 Backup=hpad1580
+3 Update Parts Master=hpad1590
+2 Query
+3 Job No query=hpad700
+3 Parts Not Charged to Customer=hpad1600
+2 Custom
+3 Maintain Watch Band=hpad1610
+3 Watch Band Selection=hpad1620
+3 Search Watch Parts by Model=hpad1630
