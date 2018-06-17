@@ -415,3 +415,63 @@ begin
     return
   end if
 end
+go
+
+ALTER FUNCTION "DBA"."func_deliverjob"(in @job_id unsigned integer,in @mech_id unsigned integer,in @mdate date, in @gstin varchar(20), in other_info varchar(40))
+returns integer
+begin
+  declare @lret integer;
+  declare @dues numeric(12,2);
+  declare @status_id unsigned integer;
+  declare @recid unsigned integer;
+  declare @mmech_id unsigned integer;
+  declare @autoreceipt char(1);
+  declare @cust_id unsigned integer;
+  //first create receipt
+  select dues,status_id,mech_id into @dues,@status_id,@mmech_id from serv_main where job_id = @job_id;
+  if @status_id in(9,10) then
+    return
+  end if;
+  // set gstin for customer
+    if @gstin is not null and trim(@gstin) != '' then
+        update serv_cust_details set gstin = @gstin where cust_id = (select cust_id from serv_main where job_id = @job_id);
+    end if;
+  // set parent company invoice
+    if @other_info is not null and trim(other_info) != '' then
+        update serv_main set other_info = @other_info where job_id = @job_id;
+    end if;
+  //get autoreceipt
+  select autoreceipt into @autoreceipt from service_status;
+  if @autoreceipt is null then set @autoreceipt='N'
+  end if;
+  if @mech_id is null then
+    if @mmech_id is null then
+      raiserror 17086 'Error';
+      return
+    else
+      set @mech_id=@mmech_id
+    end if
+  end if;
+  if @dues is not null and @dues > 0 then
+    //create receipts only when @autoreceipt = 'Y'
+    if @autoreceipt = 'Y' then
+      insert into serv_main_receipt(job_id,rec_amt,rec_date,rectype) values(
+        @job_id,@dues,@mdate,'Y');
+      set @recid=@@identity;
+      //for job sheet receipt purpose
+      update serv_main set job_sheet_rec_id = @recid where job_id = @job_id
+    end if
+  end if;
+  //create delivery transaction
+  //if status is ready then delivered ok else delivered not ok
+  if @status_id = 5 then
+    set @status_id=9
+  else if @status_id = 6 then
+      set @status_id=10
+    end if
+  end if;
+  insert into serv_transaction(job_id,status_id,tran_date,mech_id) values(
+    @job_id,@status_id,@mdate,@mech_id);
+  return(@lret)
+end
+go

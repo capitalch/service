@@ -6,6 +6,9 @@
                             6. profit calculation
                             7. Highlight details in print and not show in light color
                             8. GSTIN no of customer
+9. Track+ Transfer
+    When service+ advance then Track+ advance money receipt and no sale
+    When delivery then Track+ full cash bill and advance money refund voucher
 
 //service+ changes
 
