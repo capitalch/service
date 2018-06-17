@@ -1,9 +1,11 @@
-1. Other_info in final screen
-2. Print modify
-3. Transfer to Track function
+                            1. Other_info provision
+                            2. Print modifications final
+3. Transfer to Track functionality
 4. Reports of taxes
-5. Back calculate
-6. profit calculation
+                            5. Back calculate
+                            6. profit calculation
+                            7. Highlight details in print and not show in light color
+                            8. GSTIN no of customer
 
 //service+ changes
 
