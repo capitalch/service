@@ -1,8 +1,9 @@
-1. serv_main table add sgst, cgst, igst as numeric(12,2)
-2. Master sale report add three columns as above
-3. Final calculation of job, provide sgst, cgst and igst
-4. w_response_service_final_calculations make provisions for sgst, cgst and igst. Save command saves directly to serv_main.
-5. Provide 3 gst values in w_response_job_sheet in recmain library.
+1. Other_info in final screen
+2. Print modify
+3. Transfer to Track function
+4. Reports of taxes
+5. Back calculate
+6. profit calculation
 
 //service+ changes
 
