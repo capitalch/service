@@ -417,7 +417,7 @@ begin
 end
 go
 
-ALTER FUNCTION "DBA"."func_deliverjob"(in @job_id unsigned integer,in @mech_id unsigned integer,in @mdate date, in @gstin varchar(20), in other_info varchar(40))
+ALTER FUNCTION "DBA"."func_deliverjob"(in @job_id unsigned integer,in @mech_id unsigned integer,in @mdate date, in @gstin varchar(20), in @other_info varchar(40))
 returns integer
 begin
   declare @lret integer;
@@ -437,7 +437,7 @@ begin
         update serv_cust_details set gstin = @gstin where cust_id = (select cust_id from serv_main where job_id = @job_id);
     end if;
   // set parent company invoice
-    if @other_info is not null and trim(other_info) != '' then
+    if @other_info is not null and trim(@other_info) != '' then
         update serv_main set other_info = @other_info where job_id = @job_id;
     end if;
   //get autoreceipt
@@ -475,3 +475,67 @@ begin
   return(@lret)
 end
 go
+
+ALTER TRIGGER "insert_serv_main_receipt" before insert order 1 on
+DBA.serv_main_receipt
+referencing new as new_name
+for each row
+begin
+  declare @ref_no char(30);
+  declare @job_no char(10);
+  declare @dues numeric(12,2);
+  declare @cgst numeric(12,2);
+  declare @sgst numeric(12,2);
+  declare @igst numeric(12,2);
+  declare @isAdvance char(1);
+  declare @other_info varchar(40);
+  declare @cust_id unsigned integer;
+  declare @gstin varchar(20);
+  //get default from service_status
+  if new_name.prefix_id is null then
+    set new_name.prefix_id=(select rec_prefix_id from
+        service_status)
+  end if;
+  //default rec_date
+  if new_name.rec_date is null then set new_name.rec_date=today(*)
+  end if;
+  //default last rec_no
+  if new_name.rec_no is null or new_name.rec_no = 0 then
+    set new_name.rec_no=(select last_no+1 from prefix_receipt where
+        prefix_id = new_name.prefix_id);
+    update prefix_receipt set last_no = last_no+1 where
+      prefix_id = new_name.prefix_id
+  end if;
+  set @ref_no=trim((select prefix from prefix_receipt where prefix_id = 
+      new_name.prefix_id))+'/'+string(new_name.rec_no);
+  //update serv_main
+  update serv_main set advance = advance+(if new_name.rectype = 'Y' then
+      new_name.rec_amt else(-new_name.rec_amt) endif) where
+    job_id = new_name.job_id;
+  select cgst, sgst, igst, dues, trim(other_info), cust_id into @cgst, @sgst, @igst, @dues, @other_info, @cust_id
+    from serv_main where job_id = new_name.job_id;
+  select gstin into @gstin from serv_cust_details where cust_id = @cust_id;
+  if @dues > 10 then
+    set @isAdvance = 'y';
+  else
+    set @isAdvance = 'n';
+  end if;
+  //update accounts package acc
+  if(select updateacc from service_status) = 'Y' then
+    select job_no into @job_no from serv_main where job_id = new_name.job_id;
+    // other_info has neosis invoice no
+    call remoteinsertacc(@ref_no, new_name.rec_amt,string(new_name.rec_date),new_name.rectype,@job_no,'I', @cgst, @sgst, @igst, @isAdvance
+    , @other_info
+    , @gstin); //I for insert
+  end if
+end
+go
+
+ALTER PROCEDURE "DBA"."remoteinsertacc"( in @rec_no char(30) default '',in @rec_amt real default 0,in @rec_date char(10) default '',in @rectype char(1) default 'Y',in @job_no char(10) default '',in @ptype char(1) default 'I'
+,in @cgst real default 0,in @sgst real default 0,in @igst real default 0,in @isAdvance char(1) default 'n'
+,in @other_info char(40) default null
+,in @gstin char(20) default null
+) 
+at 'techsony2018..dba.remoteinsert'
+go
+

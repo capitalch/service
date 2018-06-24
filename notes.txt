@@ -1,25 +1,32 @@
+//Final items pending on 24-06-2018 Sunday
+1. Take care of return / delete of receipts and adjust triggers of serv_main_receipts accordingly
+2. Make use of sp_insert_bill_memo_pb, sp_insert_bill_memo_cust_pb to do sales entry in track+ to do sales entry
+3. Track+ make sales entry only if @isAdvance is 'n'. If @isadvance = 'y' then make advance entry.
+
+
+
                             1. Other_info provision
                             2. Print modifications final
-3. Transfer to Track functionality
+                            3. Transfer to Track functionality
 4. Reports of taxes
                             5. Back calculate
                             6. profit calculation
                             7. Highlight details in print and not show in light color
                             8. GSTIN no of customer
-9. Track+ Transfer
+                            9. Track+ Transfer
     When service+ advance then Track+ advance money receipt and no sale
     When delivery then Track+ full cash bill and advance money refund voucher
-
+10. Check complexity of @recType and @ptype and @isAdvance in Track+. 
 //service+ changes
 
 //Track+ changes
 1. RemoteInsertAcc
     a. Use sp_insert_bill_memo_pb, sp_insert_bill_memo_cust_pb to do sales entry
-    b. Take care of roundoff figures
-    c. Consume sgst, cgst and igst figures from service+
+                            b. Take care of roundoff figures
+                            c. Consume sgst, cgst and igst figures from service+
 //service+ changes
-1. Presently trigger of serv_main_receipt is used to push values to Track+ through RemoteInsertAcc
-    a. Do changes to send job no, neosis invoice no, and sgst, cgst, igst figures and also customer details through RemoteInsertAcc
-2. In PB app do necessary changes to calculate GST and put in appropriate columns of serv_main table
-3. In PB app at time of doing delivery make provision for storing neosis invoice no which is stored in serv_main table 
-    and passed through remoteinsertacc
+                            1. Presently trigger of serv_main_receipt is used to push values to Track+ through RemoteInsertAcc
+                                a. Do changes to send job no, neosis invoice no, and sgst, cgst, igst figures and also customer details through RemoteInsertAcc
+                            2. In PB app do necessary changes to calculate GST and put in appropriate columns of serv_main table
+                            3. In PB app at time of doing delivery make provision for storing neosis invoice no which is stored in serv_main table 
+                                and passed through remoteinsertacc
