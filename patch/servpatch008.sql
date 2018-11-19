@@ -483,6 +483,8 @@ for each row
 begin
   declare @ref_no char(30);
   declare @job_no char(10);
+  declare @amount numeric(12,2);
+  declare @transferAmount numeric(12,2);
   declare @dues numeric(12,2);
   declare @cgst numeric(12,2);
   declare @sgst numeric(12,2);
@@ -512,21 +514,49 @@ begin
   update serv_main set advance = advance+(if new_name.rectype = 'Y' then
       new_name.rec_amt else(-new_name.rec_amt) endif) where
     job_id = new_name.job_id;
-  select cgst, sgst, igst, dues, trim(other_info), cust_id into @cgst, @sgst, @igst, @dues, @other_info, @cust_id
+  select cgst, sgst, igst, dues, trim(other_info), cust_id, amount into @cgst, @sgst, @igst, @dues, @other_info, @cust_id, @amount
     from serv_main where job_id = new_name.job_id;
   select gstin into @gstin from serv_cust_details where cust_id = @cust_id;
   if @dues > 10 then
     set @isAdvance = 'y';
+    set @transferAmount = new_name.rec_amt;
   else
     set @isAdvance = 'n';
+    set @transferAmount = @amount;
   end if;
   //update accounts package acc
   if(select updateacc from service_status) = 'Y' then
     select job_no into @job_no from serv_main where job_id = new_name.job_id;
     // other_info has neosis invoice no
-    call remoteinsertacc(@ref_no, new_name.rec_amt,string(new_name.rec_date),new_name.rectype,@job_no,'I', @cgst, @sgst, @igst, @isAdvance
+    call remoteinsertacc(@ref_no, @transferAmount,string(new_name.rec_date),new_name.rectype,@job_no,'I', @cgst, @sgst, @igst, @isAdvance
     , @other_info
     , @gstin); //I for insert
+  end if
+end
+go
+
+ALTER TRIGGER "delete_serv_main_receipt" before delete order 1 on
+DBA.serv_main_receipt
+referencing old as old_name
+for each row
+begin
+  declare @ref_no char(30);
+  declare @job_no char(10);
+  if(select status_id from serv_main where job_id = old_name.job_id) in(
+    9,10) then
+    raiserror 17098 'Cannot delete receipt of delivered jobs'
+  end if;
+  //update serv_main
+  update serv_main set advance = advance-(if old_name.rectype = 'Y' then
+      old_name.rec_amt else(-old_name.rec_amt) endif),job_sheet_rec_id = null where
+    job_id = old_name.job_id;
+  if(select updateacc from service_status) = 'Y' then
+    set @ref_no=trim((select prefix from prefix_receipt where prefix_id = 
+        old_name.prefix_id))+'/'+string(old_name.rec_no);
+
+    call remoteinsertacc(@ref_no, 0,string(old_name.rec_date),old_name.rectype,'','D'); //D for delete
+
+    //call remoteinsertacc(@ref_no,0,string(old_name.rec_date),old_name.rectype,'','D')
   end if
 end
 go
